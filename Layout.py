@@ -14,10 +14,10 @@ def additem():
     #print(typed_text)
     #product.delete(1,END)
     bill_list.append(typed_text)
-    print(bill_list)
+    #print(bill_list)
     i = additem.counter
     bill_box.insert(0,bill_list[i])
-    print(i)
+    #print(i)
     additem.counter = additem.counter+1
     
 additem.counter = 0
