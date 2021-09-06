@@ -12,31 +12,41 @@ title.pack(fill = X)
 
 #add the item to the bill and give output of the bill
 def additem():
-    #print(typed_text)
-    #product.delete(1,END)
     bill_list.append(typed_text)
-    #print(bill_list)
     i = additem.counter
     bill_box.insert(0,(bill_list[i]))
     addrate(typed_text)
-    #bill_box.insert(1,database.item_rate(bill_list[i]))
-    #print(i)
     additem.counter = additem.counter+1
-    
+
 additem.counter = 0
 
+#Used to print the rate of the item in the rate box
 def addrate(name):
-    #print(typed_text)
-    #product.delete(1,END)
-    #rate_list.append(typed_text)
-    #print(bill_list)
     i = addrate.counter
-    rate_box.insert(0,database.item_rate(name))
-    #bill_box.insert(1,database.item_rate(bill_list[i]))
-    #print(i)
+    item_rate = database.item_rate(name)
+    rate_box.insert(0,item_rate)    
+    item_rateee = num = list(sum(item_rate, ()))
+    addprice(int(item_rateee[0]))
     addrate.counter = addrate.counter+1
     
 addrate.counter = 0
+
+#used to print the price after calculating the rate and the quantity 
+def addprice(item_rate):
+  quanty = int(quantity.get())
+  price = item_rate*quanty
+  price_box.insert(0,price)
+  price_list.append(price)
+  #print(price_list)
+  total(price_list)
+
+def total(price_list):
+  sum = 0
+  for x in price_list:
+    sum = sum+x
+  tot_box.delete(0,END)
+  tot_box.insert(0,sum)
+
 
 # Update the listbox
 def update_listbox(data):
@@ -75,9 +85,26 @@ def check(e):
 # Create a label for search
 Searchlab = Label(root, text="Search",font=("times new romman", 14))
 Searchlab.place(x=400,y=120)
+
 #Create a label for quantity
 Quantitylab = Label(root, text="Quantity",font=("times new romman", 14))
 Quantitylab.place(x=900,y=120)
+
+#Create a lable for name
+namelab = Label(root,text="ITEM",font =("times new romman",14))
+namelab.place(x=550,y=189)
+
+#create a lable for rate
+ratelab = Label(root,text="RATE",font =("times new romman",14))
+ratelab.place(x=800,y=189)
+
+#create a lable for price
+pricelab = Label(root,text="PRICE",font =("times new romman",14))
+pricelab.place(x=1070,y=189)
+
+#create a lable for total
+totlab = Label(root,text="TOTAL",font =("times new romman",14))
+totlab.place(x=1360,y=620)
 
 # Create an entry box for product
 product = Entry(root, font=("Helvetica"),width=70)
@@ -88,19 +115,33 @@ quantity = Entry(root,font=("Helvetica"),width=10)
 quantity.place(x=900,y=150)
 
 # Create a listbox
-list_box = Listbox(root, width=100)
+list_box = Listbox(root, width=50)
 list_box.place(x=60,y=190)
 
 #Creating a list to store the items in the bill
 bill_list =[]
+
+#Creating a list to store the rate of the items in the bill
 rate_list =[]
 
+#Creating a list to store the proce of the items in the bill
+price_list =[]
+
 #Creating a list box display the bill
-bill_box = Listbox(root,width=100,height=30,)
-bill_box.place(x=600,y=190)
+bill_box = Listbox(root,width=50,height=30,)
+bill_box.place(x=450,y=230)
+
 #bill_box.insert(1,"Suryah")
-rate_box = Listbox(root,width = 100,height = 30,)
-rate_box.place(x=800,y = 190)
+rate_box = Listbox(root,width = 50,height = 30,)
+rate_box.place(x=700,y = 230)
+
+#price box to display total price
+price_box = Listbox(root,width = 50, height = 30,)
+price_box.place(x =950,y= 230)
+
+#total box to display the total of the bill
+tot_box = Listbox(root,width = 30, height = 3,)
+tot_box.place(x =1300,y= 660)
 
 # Programming Language List
 programming_lan = database.item_list()
@@ -117,8 +158,6 @@ product.bind("<KeyRelease>", check)
 #Adding a button to add the selected item to the bill of the customer
 addbutton = Button(text="Add Item",command=additem)
 addbutton.place(x=1050,y=150)
-
-
 
 #execute tkinter
 root.mainloop()

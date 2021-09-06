@@ -15,13 +15,12 @@ def item_list():
 #This function is used to return the rate of the items in the inventory
 def item_rate(name):
     rate = []
-    print(name)
     cmd = "SELECT RATE FROM ITEMS WHERE NAME = %s;"
     mycursor.execute(cmd,(name,))
     result = mycursor.fetchall()
     #for x in result:
-    #rate.append(result[2])
-    x = result
-    return x
+    #rate.append(x[2])
+    rate = result
+    return rate
 def add_item():
     return
