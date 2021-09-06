@@ -1,23 +1,26 @@
 import config
 import mysql.connector
+def create_table():
+    mycursor.execute("create table items (id int,name varchar(25),rate int);")
 try:
     mydb = mysql.connector.connect(host=config.host,user=config.username,password=config.userpass,database=config.database)
     mycursor = mydb.cursor()
-except  mysql.connector.Error:
+    try:
+        mycursor.execute("SELECT * FROM items;")
+        abc = mycursor.fetchall()
+    except:
+        print("The credentials given by you are correct but there is no table in that database.")
+        print("Enter 1. To create a table named items")
+        print("Enter 2. To exit...")
+        option = int(input())
+        if(option == 1):
+            create_table()
+        else:
+            print("Ok bye...")
+except mysql.connector.Error:
     print("The credentials stored in config.py are invalid. Kindly check and try again")
 
-try:
-    mycursor.execute("SELECT * FROM items;")
-    abc = mycursor.fetchall()
-except mysql.connector.ProgrammingError:
-    print("The credentials given by you are correct but there is no table in that database.")
-    print("Enter 1. To create a table named items")
-    print("Enter 2. To exit...")
-    option = int(input())
-    if(option == 1):
-        create_table()
-    else:
-        print("Ok bye...")
+
         #exit
 
 #This function is used to return the items in the inventory
@@ -42,5 +45,3 @@ def item_rate(name):
 def add_item():
     return
 
-def create_table():
-    mycursor.execute("create table item(id int,name varchar(25),rate int);")

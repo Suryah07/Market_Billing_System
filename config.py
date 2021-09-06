@@ -2,4 +2,4 @@
 username = 'root'
 userpass = 'root1234'
 host = 'localhost'
-database = 'sample'
+database = 'sample12'
