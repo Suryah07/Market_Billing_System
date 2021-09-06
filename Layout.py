@@ -22,22 +22,18 @@ additem.counter = 0
 
 #Used to print the rate of the item in the rate box
 def addrate(name):
-    i = addrate.counter
     item_rate = database.item_rate(name)
     rate_box.insert(0,item_rate)    
     item_rateee = num = list(sum(item_rate, ()))
     addprice(int(item_rateee[0]))
-    addrate.counter = addrate.counter+1
-    
-addrate.counter = 0
 
 #used to print the price after calculating the rate and the quantity 
 def addprice(item_rate):
   quanty = int(quantity.get())
+  quantity_box.insert(0,quanty)
   price = item_rate*quanty
   price_box.insert(0,price)
   price_list.append(price)
-  #print(price_list)
   total(price_list)
 
 def total(price_list):
@@ -53,7 +49,6 @@ def update_listbox(data):
   # Clear the listbox
   list_box.delete(0, END)
 
-  # Add programming_lan to listbox
   for item in data:
     list_box.insert(END, item)
 
@@ -92,15 +87,19 @@ Quantitylab.place(x=900,y=120)
 
 #Create a lable for name
 namelab = Label(root,text="ITEM",font =("times new romman",14))
-namelab.place(x=550,y=189)
+namelab.place(x=530,y=189)
 
 #create a lable for rate
 ratelab = Label(root,text="RATE",font =("times new romman",14))
-ratelab.place(x=800,y=189)
+ratelab.place(x=730,y=189)
+
+#Create a lable for quantity
+quantitylab = Label(root,text="QUANTITY",font=("times new romman",14))
+quantitylab.place(x=940,y=189)
 
 #create a lable for price
 pricelab = Label(root,text="PRICE",font =("times new romman",14))
-pricelab.place(x=1070,y=189)
+pricelab.place(x=1170,y=189)
 
 #create a lable for total
 totlab = Label(root,text="TOTAL",font =("times new romman",14))
@@ -133,15 +132,18 @@ bill_box.place(x=450,y=230)
 
 #bill_box.insert(1,"Suryah")
 rate_box = Listbox(root,width = 50,height = 30,)
-rate_box.place(x=700,y = 230)
+rate_box.place(x=660,y = 230)
+
+quantity_box = Listbox(root,width = 50,height = 30,)
+quantity_box.place(x=870,y = 230)
 
 #price box to display total price
-price_box = Listbox(root,width = 50, height = 30,)
-price_box.place(x =950,y= 230)
+price_box = Listbox(root,width = 40, height = 30,)
+price_box.place(x =1080,y= 230)
 
 #total box to display the total of the bill
 tot_box = Listbox(root,width = 30, height = 3,)
-tot_box.place(x =1300,y= 660)
+tot_box.place(x =1325,y= 660)
 
 # Programming Language List
 programming_lan = database.item_list()
