@@ -2,9 +2,12 @@ import config
 import mysql.connector
 def create_table():
     mycursor.execute("create table items (id int,name varchar(25),rate int);")
+
+#To check weather the connection is correct
 try:
     mydb = mysql.connector.connect(host=config.host,user=config.username,password=config.userpass,database=config.database)
     mycursor = mydb.cursor()
+    #To check weather there is table in the name items or not
     try:
         mycursor.execute("SELECT * FROM items;")
         abc = mycursor.fetchall()
@@ -17,11 +20,10 @@ try:
             create_table()
         else:
             print("Ok bye...")
+            input()
 except mysql.connector.Error:
     print("The credentials stored in config.py are invalid. Kindly check and try again")
-
-
-        #exit
+    input()
 
 #This function is used to return the items in the inventory
 def item_list():
@@ -32,6 +34,7 @@ def item_list():
     for x in result:
         items.append(x[1])    
     return items
+
 #This function is used to return the rate of the items in the inventory
 def item_rate(name):
     rate = []
@@ -42,6 +45,16 @@ def item_rate(name):
     #rate.append(x[2])
     rate = result
     return rate
-def add_item():
+
+#To insert the items to the table
+def add_item(id,name,rate):
+    cmd = "insert into items (id,name,rate) values (%s,%s,%s);"
+    mycursor.execute(cmd,(id,str(name),rate,))
     return
 
+#to select all the values and return in a type of list
+def selectall():
+    mycursor.execute("SELECT * FROM items;")
+    allthis = mycursor.fetchall()
+    mydb.commit()
+    return allthis
