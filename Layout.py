@@ -1,5 +1,6 @@
 #inporting libraries
 from tkinter import *
+import database
 root = Tk()
 root.title('Billing System')
 root.geometry('1920x1080')
@@ -16,11 +17,26 @@ def additem():
     bill_list.append(typed_text)
     #print(bill_list)
     i = additem.counter
-    bill_box.insert(0,bill_list[i])
+    bill_box.insert(0,(bill_list[i]))
+    addrate(typed_text)
+    #bill_box.insert(1,database.item_rate(bill_list[i]))
     #print(i)
     additem.counter = additem.counter+1
     
 additem.counter = 0
+
+def addrate(name):
+    #print(typed_text)
+    #product.delete(1,END)
+    #rate_list.append(typed_text)
+    #print(bill_list)
+    i = addrate.counter
+    rate_box.insert(0,database.item_rate(name))
+    #bill_box.insert(1,database.item_rate(bill_list[i]))
+    #print(i)
+    addrate.counter = addrate.counter+1
+    
+addrate.counter = 0
 
 # Update the listbox
 def update_listbox(data):
@@ -77,14 +93,17 @@ list_box.place(x=60,y=190)
 
 #Creating a list to store the items in the bill
 bill_list =[]
+rate_list =[]
 
 #Creating a list box display the bill
 bill_box = Listbox(root,width=100,height=30,)
-bill_box.place(x=800,y=190)
+bill_box.place(x=600,y=190)
 #bill_box.insert(1,"Suryah")
+rate_box = Listbox(root,width = 100,height = 30,)
+rate_box.place(x=800,y = 190)
 
 # Programming Language List
-programming_lan = ["Python","Javascript","C++","Java","PHP","Kotlin","Suryah","apple","suryah12","adventure","windows","macos"]
+programming_lan = database.item_list()
 
 # Add the programming_lan to our list
 update_listbox(programming_lan)
