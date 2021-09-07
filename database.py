@@ -58,3 +58,8 @@ def selectall():
     allthis = mycursor.fetchall()
     mydb.commit()
     return allthis
+
+def remove_item(name):
+    cmd = "DELETE FROM items WHERE name = %s;"
+    mycursor.execute(cmd,(name,))
+    

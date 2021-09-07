@@ -10,6 +10,14 @@ def addinventory():
     nameplace()
     rateplace()
 
+def removeinventory():
+    namevalue = name.get()
+    idvalue = id.get()
+    ratevalue = rate.get()
+    database.remove_item(namevalue)
+    idplace()
+    nameplace()
+    rateplace()
 
 def idplace():
     items = database.selectall()
@@ -72,8 +80,11 @@ ratelab.place(x=540,y=120)
 rate = Entry(root,font=("Helvetica"),width=10)
 rate.place(x=507,y=150)
 
-add_to_inventory = Button(text = "Add To Inventory",command=addinventory,height=3,width=14,font=("Helvetica"))
-add_to_inventory.place(x=250,y=200)
+add_to_inventory = Button(text = "Add To Inventory",command=addinventory,height=3,width=20,font=("Helvetica"))
+add_to_inventory.place(x=230,y=200)
+
+remove_from_inventory = Button(text = "Remove From Inventory",command=removeinventory,height=3,width=20,font=("Helvetica"))
+remove_from_inventory.place(x=230,y=300)
 
 #Dont know why but the display is working without this
 root.mainloop()
