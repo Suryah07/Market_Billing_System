@@ -18,6 +18,8 @@ def close():
 
 #add the item to the bill and give output of the bill
 def additem():
+    item_adding = product.get()
+    typed_text = item_adding
     bill_list.append(typed_text)
     i = additem.counter
     bill_box.insert(0,(bill_list[i]))
