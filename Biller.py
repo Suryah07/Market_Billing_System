@@ -57,6 +57,17 @@ def printbill():
   col = col+1
   row = 0
 
+  tot_box.delete(0,END)
+  price_box.delete(0,END)
+  rate_box.delete(0,END)
+  bill_box.delete(0,END)
+  quantity_box.delete(0,END)
+  gsum = 0
+  price_list.clear
+  rate_list.clear
+  bill_list.clear
+  tot_box.insert(0,gsum)
+
   workbook.close()
   
 
@@ -83,7 +94,7 @@ additem.counter = 0
 def addrate(name):
     item_rate = database.item_rate(name)
     rate_box.insert(0,item_rate[0])    
-    item_rateee = num = list(sum(item_rate, ()))
+    item_rateee = list(sum(item_rate, ()))
     addprice(int(item_rateee[0]))
 
 #used to print the price after calculating the rate and the quantity 
@@ -93,14 +104,17 @@ def addprice(item_rate):
   price = item_rate*quanty
   price_box.insert(0,price)
   price_list.append(price)
-  total(price_list)
+  total(price_list,price)
 
-def total(price_list):
-  sum = 0
-  for x in price_list:
-    sum = sum+x
+def total(price_list,price):
+  global gsum
+  gsum = 0
+  tsum = tot_box.get(0,0)
+  tsum = tsum[0]+price
+  #for x in price_list:
+    #gsum = gsum+x
   tot_box.delete(0,END)
-  tot_box.insert(0,sum)
+  tot_box.insert(0,tsum)
 
 
 # Update the listbox
@@ -177,12 +191,15 @@ list_box = Listbox(root, width=30,font=("Helvetica"))
 list_box.place(x=60,y=190)
 
 #Creating a list to store the items in the bill
+global bill_list
 bill_list =[]
 
 #Creating a list to store the rate of the items in the bill
+global rate_list
 rate_list =[]
 
 #Creating a list to store the proce of the items in the bill
+global price_list
 price_list =[]
 
 #Creating a list box display the bill
@@ -203,6 +220,7 @@ price_box.place(x =1090,y= 250)
 #total box to display the total of the bill
 tot_box = Listbox(root,width = 16, height = 3,font=("Helvetica"))
 tot_box.place(x =1325,y= 660)
+tot_box.insert(0,0)
 
 # Programming Language List
 items_in_base = database.item_list()
