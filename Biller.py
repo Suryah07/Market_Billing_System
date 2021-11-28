@@ -2,6 +2,12 @@
 from tkinter import *
 #import inventory
 import database
+import xlsxwriter
+from tkinter import simpledialog
+
+
+
+
 root = Tk()
 root.title('Billing System')
 root.geometry('1920x1080')
@@ -10,6 +16,51 @@ title = Label(root,text = 'Billing System',bg=bg_color,fg = 'white',font =('time
 title.pack(fill = X)
 
 #==============PRODUCT DETAILS==================
+
+def printbill():
+  print("hi")
+  cname = simpledialog.askstring(title="Bill Save",prompt="Customer name")
+  workbook = xlsxwriter.Workbook("Bills/"+cname+".xlsx")
+  worksheet = workbook.add_worksheet()
+  row = 0
+  col = 0
+
+  for a in bill_box.get(0,END):
+    worksheet.write(row,col,a)
+    row = row+1
+  col = col+1
+  row = 0
+
+  for a in rate_box.get(0,END):
+    worksheet.write(row,col,a[0])
+    row = row+1
+  col = col+1
+  row = 0
+
+  for a in quantity_box.get(0,END):
+    worksheet.write(row,col,a)
+    row = row+1
+  col = col+1
+  row = 0
+
+  for a in price_box.get(0,END):
+    worksheet.write(row,col,a)
+    row = row+1
+  col = col+1
+
+  for a in tot_box.get(0,END):
+    worksheet.write(row,col,"Total")
+    col = col+1
+    worksheet.write(row,col,a)
+    row = row+1
+
+  col = col+1
+  row = 0
+
+  workbook.close()
+  
+
+
 
 def close():
   root.destroy()
@@ -31,7 +82,7 @@ additem.counter = 0
 #Used to print the rate of the item in the rate box
 def addrate(name):
     item_rate = database.item_rate(name)
-    rate_box.insert(0,item_rate)    
+    rate_box.insert(0,item_rate[0])    
     item_rateee = num = list(sum(item_rate, ()))
     addprice(int(item_rateee[0]))
 
@@ -169,9 +220,12 @@ product.bind("<KeyRelease>", check)
 addbutton = Button(text="Add Item",command=additem,font=("Helvetica"))
 addbutton.place(x=1050,y=145)
 
+billbutton = Button(text = "Print Bill",command =printbill,font=("Helvetica"))
+billbutton.place(x=1070,y=650)
+
 #Addding button to manage inventory
 inventory_button = Button(text = "Manage Inventory",command=close,height=5,width=20,font=("Helvetica"))
-inventory_button.place(x=100,y=600)
+inventory_button.place(x=100,y=650)
 
 #execute tkinter
 root.mainloop()
