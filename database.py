@@ -1,11 +1,11 @@
-import config
+import config as details
 import mysql.connector
 def create_table():
     mycursor.execute("create table items (id int,name varchar(25),rate int);")
 
 #To check weather the connection is correct
 try:
-    mydb = mysql.connector.connect(host=config.host,user=config.username,password=config.userpass,database=config.database)
+    mydb = mysql.connector.connect(host=details.host,user=details.username,password=details.userpass,database=details.database)
     mycursor = mydb.cursor()
     #To check weather there is table in the name items or not
     try:
@@ -22,6 +22,7 @@ try:
             print("Ok bye...")
             input()
 except mysql.connector.Error:
+    
     print("The credentials stored in config.py are invalid. Kindly check and try again")
     input()
 
@@ -62,4 +63,7 @@ def selectall():
 def remove_item(name):
     cmd = "DELETE FROM items WHERE name = %s;"
     mycursor.execute(cmd,(name,))
+
+def save_bill(name):
+    print("hello")
     

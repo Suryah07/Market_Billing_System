@@ -10,4 +10,4 @@ userpass = 'root1234'
 host = 'localhost'
 
 #Change it to the name of your database
-database = 'sample'
+database = 'market_billing_system'
